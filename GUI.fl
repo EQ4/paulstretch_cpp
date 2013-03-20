@@ -1,45 +1,50 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0110 
+version 1.0300 
 header_name {.h} 
 code_name {.cxx}
-decl {//Copyright (c) Nasca Octavian Paul. Released under GNU General Public License version 2} {public
+decl {//Copyright (c) Nasca Octavian Paul. Released under GNU General Public License version 2} {public local
 } 
 
-decl {\#include <FL/Fl_File_Chooser.H>} {} 
-
-decl {\#include <FL/Fl_Box.H>} {public
+decl {\#include <FL/Fl_File_Chooser.H>} {private local
 } 
 
-decl {\#include <FL/Fl_Group.H>} {public
+decl {\#include <FL/Fl_Box.H>} {public local
 } 
 
-decl {\#include <FL/Fl_Box.H>} {public
+decl {\#include <FL/Fl_Group.H>} {public local
 } 
 
-decl {\#include <FL/fl_draw.H>} {public
+decl {\#include <FL/Fl_Box.H>} {public local
 } 
 
-decl {\#include <FL/Fl_Value_Input.H>} {public
+decl {\#include <FL/fl_draw.H>} {public local
 } 
 
-decl {\#include <FL/fl_ask.H>} {public
+decl {\#include <FL/Fl_Value_Input.H>} {public local
 } 
 
-decl {\#include<sys/stat.h>} {} 
-
-decl {\#include <stdio.h>} {} 
-
-decl {\#include <string>} {} 
-
-decl {\#include <math.h>} {} 
-
-decl {\#include "Control.h"} {public
+decl {\#include <FL/fl_ask.H>} {public local
 } 
 
-decl {\#include "FreeEditUI.h"} {public
+decl {\#include<sys/stat.h>} {private local
 } 
 
-decl {\#include "version.h"} {public
+decl {\#include <stdio.h>} {private local
+} 
+
+decl {\#include <string>} {private local
+} 
+
+decl {\#include <math.h>} {private local
+} 
+
+decl {\#include "Control.h"} {public local
+} 
+
+decl {\#include "FreeEditUI.h"} {public local
+} 
+
+decl {\#include "version.h"} {public local
 } 
 
 Function {hex4n(char c)} {return_type int
@@ -95,15 +100,16 @@ if (event==FL_PASTE){
 };
 return Fl_Box::handle(event);} {}
   }
-  decl {std::string drag_file;} {public
+  decl {std::string drag_file;} {public local
   }
-  decl {bool new_drag_file;} {public
+  decl {bool new_drag_file;} {public local
   }
 } 
 
 class GUI {open
 } {
-  decl {enum Mode {STOP,PLAY,PAUSE,FREEZE};} {}
+  decl {enum Mode {STOP,PLAY,PAUSE,FREEZE};} {private local
+  }
   Function {GUI()} {} {
     code {playing_for_button=false;
 eof_for_button=false;
@@ -188,7 +194,7 @@ rendering=false;} {}
   } {
     Fl_Window window {
       label {Paul's Extreme Sound Stretch} open
-      xywh {192 131 995 550} type Double resizable
+      xywh {459 319 995 550} type Double resizable
       code0 {if(strlen(VERSION)<2) {o->color(FL_BLUE); o->label("VERSION NOT SET!!!!!!!!!!!!");};} visible
     } {
       Fl_Menu_Bar {} {open
@@ -258,13 +264,13 @@ render();}
         } {
           MenuItem {} {
             label {About...}
-            callback {aboutwindow->show();}
+            callback {aboutwindow->show();} selected
             xywh {15 15 30 20}
           }
         }
       }
       Fl_Tabs tabs_widget {open
-        xywh {5 50 985 420} box BORDER_BOX
+        xywh {5 50 985 420}
       } {
         Fl_Group {} {
           label Parameters open
@@ -285,7 +291,7 @@ o->labelcolor(FL_BLUE);}
           Fl_Choice mode_choice {
             label {Mode:}
             callback {refresh();
-control.update_player_stretch();} selected
+control.update_player_stretch();}
             xywh {850 110 135 20} down_box BORDER_BOX
           } {
             MenuItem {} {
@@ -374,7 +380,7 @@ stretch_slider->do_callback();}
           } {
             Fl_Box stretch_free_edit {
               label Graph
-              xywh {105 250 875 210} box FLAT_BOX color 17
+              xywh {105 250 875 210} box FLAT_BOX color 57 labelcolor 54
               code0 {o->init(&control.ppar.stretch_multiplier,&control);}
               class FreeEditUI
             }
@@ -392,7 +398,7 @@ control.update_player_stretch();}
           }
         }
         Fl_Group {} {
-          label Process open
+          label Process
           xywh {5 70 985 400} hide
         } {
           Fl_Group {} {open
@@ -583,12 +589,12 @@ control.update_process_parameters();}
             }
           }
           Fl_Group {} {
-            label ArbitraryFilter
+            label ArbitraryFilter open
             xywh {10 245 975 220} box THIN_UP_BOX labeltype ENGRAVED_LABEL
           } {
             Fl_Box filter_free_edit {
               label Graph
-              xywh {105 250 875 210} box FLAT_BOX color 206 selection_color 0
+              xywh {105 250 875 210} box FLAT_BOX color 57 selection_color 0 labelcolor 54
               code0 {o->init(&control.ppar.free_filter,&control);}
               class FreeEditUI
             }
@@ -627,7 +633,7 @@ control.update_process_parameters();}
         } {
           Fl_Box binaural_free_edit {
             label Graph
-            xywh {135 75 845 390} box FLAT_BOX color 135
+            xywh {135 75 845 390} box FLAT_BOX color 57 labelcolor 54
             code0 {o->init(&control.bbpar.free_edit,&control);}
             class FreeEditUI
           }
@@ -664,7 +670,7 @@ control.update_process_parameters();}
           }
         }
         Fl_Group write_to_file_group {
-          label {Write to file} open
+          label {Write to file}
           xywh {5 70 985 400} hide
         } {
           Fl_Button render_button {
@@ -713,11 +719,11 @@ selection_pos2->value(100.0);}
         }
       }
       Fl_Box infilename_output {
-        tooltip {drag audio file here to open it} xywh {5 24 1005 22} box FLAT_BOX color 17 align 84
+        tooltip {drag audio file here to open it} xywh {5 24 1005 22} box FLAT_BOX color 52 align 84
         class DDBox
       }
       Fl_Group {} {open
-        xywh {5 475 985 70} box BORDER_BOX
+        xywh {5 475 985 70} box THIN_UP_BOX
       } {
         Fl_Group {} {open
           xywh {10 490 190 40} box THIN_UP_BOX color 16
@@ -736,25 +742,25 @@ bool bypass=false;
 if (Fl::event_button()==FL_RIGHT_MOUSE) bypass=true;
 
 control.startplay(bypass);}
-            tooltip {Play - right click to play the original sound} xywh {20 500 40 20} box PLASTIC_UP_BOX
+            tooltip {Play - right click to play the original sound} xywh {20 500 40 20} labelsize 10
           }
           Fl_Button freeze_button {
             label {@<-> F}
             callback {control.freezeplay();
 set_mode(FREEZE);}
-            tooltip Freeze xywh {65 500 40 20} box PLASTIC_UP_BOX
+            tooltip Freeze xywh {65 500 40 20} labelsize 10
           }
           Fl_Button {} {
             label {@||}
             callback {set_mode(PAUSE);
 control.pauseplay();}
-            tooltip Pause xywh {110 500 40 20} box PLASTIC_UP_BOX
+            tooltip Pause xywh {110 500 40 20} labelsize 10
           }
           Fl_Button {} {
             label {@square}
             callback {set_mode(STOP);
 control.stopplay();}
-            tooltip Stop xywh {155 500 40 20} box PLASTIC_UP_BOX
+            tooltip Stop xywh {155 500 40 20} labelsize 10
           }
         }
         Fl_Value_Slider seek_slider {
@@ -934,10 +940,14 @@ if (infilename_output->new_drag_file){
     code {tickdraw((GUI *) v);
 Fl::add_timeout(1.0/3.0,tick,v);//3 fps} {}
   }
-  decl {Control control;} {}
-  decl {bool playing_for_button;} {}
-  decl {bool rendering;} {}
-  decl {bool eof_for_button;} {}
+  decl {Control control;} {private local
+  }
+  decl {bool playing_for_button;} {private local
+  }
+  decl {bool rendering;} {private local
+  }
+  decl {bool eof_for_button;} {private local
+  }
 } 
 
 Function {file_exists(const char *filename)} {return_type bool

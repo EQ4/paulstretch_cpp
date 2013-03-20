@@ -86,7 +86,7 @@ fl_color(get_color(color()));
 fl_rectf(ox,oy,lx,ly);
 
 //fl_color(FL_GRAY);
-fl_color(get_color(labelcolor()));
+fl_color(fl_color_add_alpha( get_color(labelcolor()), 100 ));
 //draw grid
 fl_line_style(FL_SOLID);
 for (int ncoord=0;ncoord<2;ncoord++){
@@ -149,7 +149,7 @@ for (int ncoord=0;ncoord<2;ncoord++){
 
 
 //draw the line
-fl_line_style(FL_SOLID,2);
+fl_line_style(FL_SOLID,3);
 fl_color(get_color(labelcolor()));
 float *data=new float[lx];
 
@@ -165,7 +165,7 @@ for (int i=0;i<lx;i++){
 delete[]data;
 
 //draw points
-fl_line_style(FL_SOLID,3);
+fl_line_style(FL_SOLID,2);
 for (int i=0;i<free_edit->get_npoints();i++){
 	if (!free_edit->is_enabled(i)) continue;
 	fl_color(FL_BLACK);
