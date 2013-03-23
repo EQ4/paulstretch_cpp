@@ -194,7 +194,7 @@ rendering=false;} {}
   } {
     Fl_Window window {
       label {Paul's Extreme Sound Stretch} open
-      xywh {459 319 995 550} type Double resizable
+      xywh {472 197 995 550} type Double resizable
       code0 {if(strlen(VERSION)<2) {o->color(FL_BLUE); o->label("VERSION NOT SET!!!!!!!!!!!!");};} visible
     } {
       Fl_Menu_Bar {} {open
@@ -264,7 +264,7 @@ render();}
         } {
           MenuItem {} {
             label {About...}
-            callback {aboutwindow->show();} selected
+            callback {aboutwindow->show();}
             xywh {15 15 30 20}
           }
         }
@@ -277,16 +277,14 @@ render();}
           xywh {5 70 985 400}
         } {
           Fl_Slider stretch_slider {
-            label {Stretch:}
             callback {refresh();
 control.update_player_stretch();}
-            xywh {10 89 975 15} type {Horz Knob} box FLAT_BOX align 6 value 0.29
+            xywh {10 89 975 15} type {Horz Knob} box THIN_DOWN_BOX align 6 value 0.29
           }
           Fl_Slider fftsize_slider {
-            label {Window Size:}
             callback {refresh();
 o->labelcolor(FL_BLUE);}
-            xywh {10 155 975 15} type {Horz Knob} box FLAT_BOX align 6 value 0.47
+            xywh {10 155 975 15} type {Horz Knob} box THIN_DOWN_BOX align 6 value 0.47
           }
           Fl_Choice mode_choice {
             label {Mode:}
@@ -395,6 +393,16 @@ stretch_slider->do_callback();}
             callback {refresh();
 control.update_player_stretch();}
             xywh {135 213 140 15} type {Horz Knob} box FLAT_BOX align 4
+          }
+          Fl_Box stretch_label {
+            label {[stretch label]}
+            xywh {10 104 330 21} align 21
+            code0 {o->label(0);}
+          }
+          Fl_Box window_size_label {
+            label {[window size label]} selected
+            xywh {10 169 330 21} align 21
+            code0 {o->label(0);}
           }
         }
         Fl_Group {} {
@@ -836,8 +844,8 @@ double resolution_s=fftsize_slider->value()/fftsize_slider->maximum();
 double onset=onset_slider->value();
 control.set_stretch_controls(stretch_s,mode,resolution_s,onset);
 
-stretch_slider->copy_label(control.get_stretch_info().c_str());
-fftsize_slider->copy_label(control.get_fftsize_info().c_str());
+stretch_label->copy_label(control.get_stretch_info().c_str());
+window_size_label->copy_label(control.get_fftsize_info().c_str());
 resolution_box->copy_label(control.get_fftresolution_info().c_str());
 
 bool may_render=false;
